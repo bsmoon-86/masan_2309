@@ -17,6 +17,15 @@ app.set('views', __dirname+'/views')
 // 뷰 파일들의 엔진을 어떤것을 사용할 것인가 지정
 app.set('view engine', 'ejs')
 
+// post 형태에서 데이터를 받아오기 위해서 설정 
+// extended : false를 사용하게 되면 데이터 변환하는 엔진을 qs 모듈을 사용(express 내장)
+// extended : true를 사용하게 되면 데이터 변환 엔진을 querystring 모듈을 사용(구버전 express에는 내장되어있지 않음)
+app.use(express.urlencoded(
+    {
+        extended : false
+    }
+))
+
 // api : 요청(웹 브라우져에서 주소창에 주소를 입력)을 보내고 응답(웹 서버에서 데이터를 보내준다.)이 온다
 // api는 웹 주소를 생성
 // localhost:3000 -> 웹서버의 기본 주소
@@ -52,6 +61,27 @@ app.get('/signin', function(req, res){
     const pass = req.query.input_pass
     console.log(id, pass)
     res.send('message')
+})
+
+// localhost:3000/signin2 [post] 주소를 생성
+app.post('/signin2', function(req, res){
+    // 유저가 입력한 데이터를 불러와서 변수에 대입 
+    console.log(req.body)
+    const id = req.body.input_id
+    const pass  = req.body.input_pass
+    console.log(id, pass)
+    // 유저가 입력한 아이디가 test이고 (조건식1) 
+    // 유저가 입력한 패스워드가 1234라면 (조건식2)
+    // 로그인이 성공
+    // 만약 아니라면 로그인이 실패
+    if ( (id == 'test') & (pass == '1234') ){
+        // 유저가 입력한 아이디와 패스워드가 모두 참인 경우 실행 할 코드 
+        res.send('로그인 성공')
+    }else{
+        // 아이디와 패스워드 중 하나만 참인 경우, 모두 거짓인 경우 실행 할 코드
+        res.send('로그인 실패')
+    }
+    // res.send('POST message')
 })
 
 // 웹서버를 실행
