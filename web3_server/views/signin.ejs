@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 제목 태그 -->
+    <h1>
+        Signin page
+    </h1>
+    <!-- 유저가 입력할 수 있는 공간 -->
+    <form action="/login" method="post">
+        <!-- id를 입력하는 공간 -->
+        <label>ID</label>
+        <input type="text" name="input_id">
+        <br>
+        <!-- password를 입력하는 공간 -->
+        <label>password</label>
+        <input type="password" name="input_pass">
+        <br>
+        <!-- 제출 버튼 생성 -->
+        <input type="submit" value="로그인">
+    </form>
+    <!-- 하이퍼링크 생성 (회원 가입 페이지로 이동) -->
+    <!-- a태그를 이용하여 하이퍼링크를 생성 주소를 get방식으로 요청 -->
+    <a href ='/signup'>회원가입</a>
+</body>
+</html>
