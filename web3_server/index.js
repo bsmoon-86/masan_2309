@@ -42,8 +42,10 @@ const contract_address = contract_info.networks['5777'].address
 // console.log(contract_abi)
 // console.log(contract_address)
 
-// web3 모듈 로드 
-const Web3 = require('web3')
+// web3 모듈 로드 ver 4.x인 경우 
+const {Web3} = require('web3')
+// web3 1.x 버전인 경우
+// const Web3 = require('web3')
 // 컨트렉트가 배포가 된 네트워크(가나슈)의 주소를 등록
 const web3 = new Web3(
     new Web3.providers.HttpProvider(
@@ -98,7 +100,7 @@ app.get('/signup2', function(req, res){
     .send(
         {
             // 수수료를 지불할 지갑의 주소
-            from : '0xbe81214fd2457813C24a93C2512aBc9795D8d316',
+            from : '0xA600927c1217018e7a7A3E0eF0d45A42C6050713',
             // 가스 limit
             gas : 200000
         }
@@ -122,7 +124,40 @@ app.post('/login', (req, res) => {
     // 스마트컨트렉트를 이용하여 회원 정보를 로드한 뒤
     // password가 맞는지 확인하고 맞으면 main 렌더링 
     // 맞지 않다면 로그인 화면으로 돌아간다. 
-    res.render('main')
+
+    // smartcontract에서 view_user() 함수를 호출
+    // view 함수 -> 데이터의 변화가 존재하지 않는다 -> 수수료가 발생하지 않는다.
+    smartcontract
+    .methods
+    .view_user(
+        _id
+    )
+    .call()
+    .then(function(result){
+        // result는 view_user()함수를 호출하고 되돌려주는 리턴값이 저장된다. 
+        // result는 데이터의 형태
+        // { "0" : password, "1" : name, "2" : age }
+        // 만약에 회원 정보가 존재하지 않는 아이디를 조회했을때는
+        // {"0" : "", "1" : "", "2" : 0}
+        
+        //  로그인이 성공하는 조건 ? -> 해당하는 id가 존재해야하고 password가 맞아야지만 로그인이 성공
+        // 유저가 입력한 password는 _pass 저장
+        // contract에 있는 password는 result[0] 저장
+        // 조건문 
+        if ((_pass == result[0]) && (result[0] != "") ){
+            // 서버가 유저에게 화면과 데이터를 같이 보내준다. 
+            // main.ejs와 로그인 한 유저의 이름을 동시에 보내준다.
+            res.render('main', {
+                "name" : result['1'], 
+                "age" : result['2']
+            })
+        } else {
+            res.redirect('/')
+        }
+    })
+
+
+    // res.render('main')
 
 
 } )

@@ -8113,12 +8113,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xbaBd4042De9fb11B5733bc233f343A1452a7EF36",
-      "transactionHash": "0x2d0362d195bf81aa74e72bf65c1a289a620630770555a580197a99054b0a9cc6"
+      "address": "0x59B13E846F33743961e495636C07d258D9040143",
+      "transactionHash": "0x3a99b4c0dcab3644bc7091445af58906bab00b2b27d0788277dd43698ef81362"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-09-12T11:12:46.920Z",
+  "updatedAt": "2023-09-13T09:57:47.851Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

@@ -13,12 +13,13 @@
     <!-- 유저가 입력할 수 있는 공간 -->
     <form action="/login" method="post">
         <!-- id를 입력하는 공간 -->
+        <!-- id와 password를 입력하는 공간에는 데이터가 존재하지 않으면 제출을 하지 못하도록 옵션 -->
         <label>ID</label>
-        <input type="text" name="input_id">
+        <input type="text" name="input_id" required>
         <br>
         <!-- password를 입력하는 공간 -->
         <label>password</label>
-        <input type="password" name="input_pass">
+        <input type="password" name="input_pass" required>
         <br>
         <!-- 제출 버튼 생성 -->
         <input type="submit" value="로그인">
