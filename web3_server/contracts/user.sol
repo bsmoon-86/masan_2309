@@ -55,7 +55,28 @@ contract users{
     ) public checkOwner {
         // 함수를 호출하는 지갑의 주소가 owner가 아니라면 코드 실행을 중지
         // mapping에 데이터를 추가 
+        // 기존의 회원 정보가 존재하면 회원 mapping 데이터를 추가하지 못하도록 작성
+        // require(조건식) -> age 회원 정보가 존재하지 않는다면 0
+        require(user[_id].age == 0, "ID exist");
         user[_id].password = _password;
+        user[_id].name = _name;
+        user[_id].age = _age;
+    }
+
+    // 회원 정보 수정 
+    function update_user(
+        string memory _id,
+        string memory _pass, 
+        string memory _name, 
+        uint8 _age
+    ) public checkOwner{
+        // 회원의 정보가 존재하지 않으면 tracsaction거절
+        require(user[_id].age != 0, "ID not exist");
+        // 수정하려는 회원의 비밀번호와 유저가 입력한 패스워드가 같은 경우
+        // 문자열을 비교하려면 문자열을 sha256암호화를 하여 비교
+        // string memory pass = user[_id].password;
+        // require(keccak256(pass) == keccak256(_old_pass), "password not match");
+        user[_id].password = _pass;
         user[_id].name = _name;
         user[_id].age = _age;
     }
